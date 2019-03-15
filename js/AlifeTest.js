@@ -2,65 +2,65 @@
 
 import React, { Component } from 'react';
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet,View,TouchableHighlight,Text } from 'react-native';
 
 import {
   ViroARScene,
-  ViroText,
   ViroConstants,
-  ViroBox,
   ViroARTrackingTargets,
   ViroARObjectMarker,
+  ViroButton,
   ViroARPlane,
   ViroFlexView,
-  ViroARCamera
+  ViroARCamera,
+  ViroText
 } from 'react-viro';
 
 import AlifeCard from './AlifeCard.js';
 
-export default class HelloWorldSceneAR extends Component {
+import { connect } from 'react-redux';
+import { changeReset } from '../store/actions/appManagement';
 
-  constructor() {
-    super();
+export default class AlifeTest extends Component {
+
+  constructor(props) {
+    super(props);
 
     // Set initial state here
-    this.state = {
-      text: "Initializing AR..."
-    };
-
+    this.state={
+      text:"yo"
+    }
     // bind 'this' to functions
-    this._onInitialized = this._onInitialized.bind(this);
     ViroARTrackingTargets.createTargets({
       "lion": {
-        source: require('./res/lion.arobject'),
+        source: require('./res/Scans/lion.arobject'),
         type: 'Object',
       },
       "ox": {
-        source: require('./res/ox.arobject'),
+        source: require('./res/Scans/ox.arobject'),
         type: 'Object',
       },
-
     });
   }
 
-  clickText = () => {
-    this.setState({ text: "You clicked!" });
+  componentDidUpdate(){
+    if (this.props.resetState) {
+      this.props.arSceneNavigator.resetARSession(true, true);
+      this.props.resetChange(false);
+    }
   }
 
   render() {
     return (
+      <React.Fragment>
       <ViroARScene onTrackingUpdated={this._onInitialized} >
+        {this.props.reset ? ()=>this.props.arSceneNavigator.resetARSession(true, true) : null}
         <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
           this.setState({
             text: "Lion figure"
           })
         }
         }>
-          <ViroText
-            textClipMode="None"
-            text={this.state.text}
-            style={styles.textStyle}
-          />
           {/* <ViroBox position={[0, .25, 0]} scale={[.25, .25, .25]} /> */}
         </ViroARObjectMarker>
         <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
@@ -69,21 +69,15 @@ export default class HelloWorldSceneAR extends Component {
           })
         }
         }>
-          <ViroText
-            textClipMode="None"
-            scale={[0.5, 0.5, 0.5]}
-            text={this.state.text}
-            style={styles.textStyle}
-          />
-          {/* <ViroBox position={[0, .25, 0]} scale={[.25, .25, .25]} /> */}
         </ViroARObjectMarker>
 
-      <AlifeCard />
+       <AlifeCard />
       </ViroARScene>
+      </React.Fragment>
     );
   }
 
-  _onInitialized(state, reason) {
+  _onInitialized=(state, reason)=>{
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
         text: "This is a card"
@@ -104,7 +98,37 @@ var styles = StyleSheet.create({
   },
   background:{
     backgroundColor:'#ffffff'
-  }
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20
+  },
+  buttons: {
+    height: 80,
+    width: 250,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
 });
 
-module.exports = HelloWorldSceneAR;
+const mapStatetoProps = reduxState => {
+  return {
+    resetState: reduxState.appManagement.resetState
+  }
+}
+
+const mapDispatchtoProps = dispatch => {
+  return {
+    resetChange: (bool) => dispatch(changeReset(bool)),
+  }
+}
+
+module.exports = connect(mapStatetoProps, mapDispatchtoProps)(AlifeTest);
+

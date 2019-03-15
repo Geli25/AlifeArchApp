@@ -10,22 +10,31 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  ActivityIndicator,
   Text,
+  Dimensions,
   View,
   StyleSheet,
+  Image,
   PixelRatio,
   TouchableHighlight,
+  
 } from 'react-native';
 
 import {
   ViroARSceneNavigator
 } from 'react-viro';
 
+import {connect} from 'react-redux';
+import {changeReset} from './store/actions/appManagement';
+
+import renderIf from './js/renderIf';
+
 /*
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: "",
+  apiKey: "2274C08B-12E4-4157-9DD5-DBD5A6C9D638",
 }
 
 // Sets the default scene you want for AR and VR
@@ -38,18 +47,11 @@ var AR_NAVIGATOR_TYPE = "AR";
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
 var defaultNavigatorType = UNSET;
 
-export default class ViroSample extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      navigatorType : defaultNavigatorType,
-      sharedProps : sharedProps
-    }
-    this._getExperienceSelector = this._getExperienceSelector.bind(this);
-    this._getARNavigator = this._getARNavigator.bind(this);
-    this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
-    this._exitViro = this._exitViro.bind(this);
+class ViroSample extends Component {
+  state={
+    navigatorType: defaultNavigatorType,
+    openModal:false,
+    sharedProps: sharedProps,
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -62,8 +64,14 @@ export default class ViroSample extends Component {
     }
   }
 
+  componentWillMount(){
+    if (this.state.reset===true){
+      this.setState({reset:false})
+    }
+  }
+
   // Presents the user with a choice of an AR or VR experience
-  _getExperienceSelector() {
+  _getExperienceSelector=()=>{
     return (
       <View style={localStyles.outer} >
         <View style={localStyles.inner} >
@@ -83,17 +91,81 @@ export default class ViroSample extends Component {
     );
   }
 
+  resetScene = () => {
+    this.props.resetChange(true);
+  }
+
+  toggleModal=()=>{
+    this.setState({
+      openModal:!this.state.openModal
+    })
+  }
+
   // Returns the ViroARSceneNavigator which will start the AR experience
-  _getARNavigator() {
+  _getARNavigator=()=>{
     return (
-      <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
+      <React.Fragment>
+        <ViroARSceneNavigator {...this.state.sharedProps}
+          style={localStyles.arView}
+          initialScene={{ scene: InitialARScene, passProps:{reset:this.state.reset} }} />
+
+          
+        {/* Info button on top right */}
+        <View  style={{ position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width:100, height: 100, right:10, top: 10, bottom: 0 }}>
+          <TouchableHighlight
+            onPress={this.toggleModal}
+            underlayColor='#00000000' >
+            <Image
+              style={{ width: 50, height: 50 }}
+              source={require("./js/res/icons/info.png")} />
+        </TouchableHighlight>
+        </View>
+
+        {/* back button on top left */}
+        <View  style={{ position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 100, height: 100, top: 10, bottom: 0 }}>
+            <TouchableHighlight
+              onPress={this._exitViro}
+              underlayColor='#00000000' >
+            <Image 
+              style={{ width: 50, height: 50 }}
+              source={require("./js/res/icons/Arrow.png")} />
+          </TouchableHighlight>
+        </View>
+
+        <View style={{ position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 100, height: 100, right: '45%', bottom: 20 }}>
+          <TouchableHighlight
+            style={localStyles.buttons}
+            onPress={this.resetScene}
+            underlayColor={'#68a0ff'} >
+
+            <Text style={localStyles.buttonText}>Reset Session</Text>
+          </TouchableHighlight>
+        </View>
+
+        {/* Info screen */}
+        {this.state.openModal ? <View style={{ 
+            opacity: 0.9, 
+            position: 'absolute', 
+            backgroundColor: 'white', 
+            flex: 1, 
+            flexDirection: 'row', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            width: '85%', 
+            height: '75%', 
+            top: '10%', 
+            left: '7%' }}>
+          <Text>Hello</Text>
+        </View> : null}
+        
+      </React.Fragment>
     );
   }
 
+
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
-  _getExperienceButtonOnPress(navigatorType) {
+  _getExperienceButtonOnPress=(navigatorType)=>{
     return () => {
       this.setState({
         navigatorType : navigatorType
@@ -102,9 +174,9 @@ export default class ViroSample extends Component {
   }
 
   // This function "exits" Viro by setting the navigatorType to UNSET.
-  _exitViro() {
-    this.setState({
-      navigatorType : UNSET
+  _exitViro=()=>{
+      this.setState({
+        navigatorType : UNSET
     })
   }
 }
@@ -113,6 +185,9 @@ var localStyles = StyleSheet.create({
   viroContainer :{
     flex : 1,
     backgroundColor: "black",
+  },
+  arView: {
+    flex: 1,
   },
   outer : {
     flex : 1,
@@ -140,7 +215,7 @@ var localStyles = StyleSheet.create({
   },
   buttons : {
     height: 80,
-    width: 150,
+    width: 250,
     paddingTop:20,
     paddingBottom:20,
     marginTop: 10,
@@ -164,4 +239,16 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = ViroSample
+const mapStatetoProps = reduxState => {
+  return {
+    resetState: reduxState.appManagement.resetState
+  }
+}
+
+const mapDispatchtoProps = dispatch => {
+  return {
+    resetChange: (bool) => dispatch(changeReset(bool)),
+  }
+}
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(ViroSample);
