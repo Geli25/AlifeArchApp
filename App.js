@@ -34,7 +34,7 @@ import renderIf from './js/renderIf';
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: "api_key",
+  apiKey: "api-key",
 }
 
 // Sets the default scene you want for AR and VR
@@ -59,6 +59,10 @@ class ViroSample extends Component {
     if (this.state.startClicked===false){
       this.setState({openModal:true})
     }
+  }
+
+  componentDidUpdate(){
+    
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -104,13 +108,6 @@ class ViroSample extends Component {
 
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator=()=>{
-
-    if (this.state.startClicked===false){
-      this.setState({
-        startClicked: true
-      });
-    }
-
     return (
       <React.Fragment>
         <ViroARSceneNavigator {...this.state.sharedProps}
@@ -175,6 +172,11 @@ class ViroSample extends Component {
   // by the experience selector buttons
   _getExperienceButtonOnPress=(navigatorType)=>{
     return () => {
+      if (this.state.startClicked === false) {
+        this.setState({
+          startClicked: true
+        });
+      }
       this.setState({
         navigatorType : navigatorType
       })

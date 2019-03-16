@@ -28,8 +28,9 @@ export default class AlifeTest extends Component {
 
     // Set initial state here
     this.state={
-      text:"yo"
+      text:"yo",
     }
+
     // bind 'this' to functions
     ViroARTrackingTargets.createTargets({
       "lion": {
@@ -61,6 +62,8 @@ export default class AlifeTest extends Component {
           })
         }
         }>
+            <AlifeCard
+              cardPosition={[0, 0, -10]} />
           {/* <ViroBox position={[0, .25, 0]} scale={[.25, .25, .25]} /> */}
         </ViroARObjectMarker>
         <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
@@ -69,13 +72,17 @@ export default class AlifeTest extends Component {
           })
         }
         }>
+            <AlifeCard
+              cardPosition={[0, 0, -10]} />
+            {/* <ViroSound paused={false}
+              muted={false}
+              source={require('./res/Sounds/jazz.mp3')}
+              loop={false}
+              volume={1.0}
+              onFinish={this.onFinishSound}
+              onError={this.onErrorSound} /> */}
         </ViroARObjectMarker>
 
-       <AlifeCard 
-        backgroundImage='./res/media.png'
-        cardPosition={[0,0,10]}
-        bodyText='res/recipes.png'
-         />
       </ViroARScene>
       </React.Fragment>
     );
