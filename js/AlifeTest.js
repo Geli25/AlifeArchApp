@@ -71,7 +71,11 @@ export default class AlifeTest extends Component {
         }>
         </ViroARObjectMarker>
 
-       <AlifeCard />
+       <AlifeCard 
+        backgroundImage='./res/media.png'
+        cardPosition={[0,0,10]}
+        bodyText='res/recipes.png'
+         />
       </ViroARScene>
       </React.Fragment>
     );

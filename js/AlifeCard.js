@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 import {
     ViroText,
     ViroFlexView,
-    ViroButton,
     ViroNode,
     ViroImage,
     ViroAnimatedImage,
@@ -16,10 +15,16 @@ import {
 
 class AlifeCard extends Component{
     componentWillMount(){
+        //require all materials and put them here
+
+
         ViroMaterials.createMaterials({
             card: {
                 diffuseTexture: require('./res/media.png'),
-            }
+            },
+            // title:{
+            //     diffuseTexture:require(this.props.titleBackground),
+            // }
         });
     }
 
@@ -35,36 +40,26 @@ class AlifeCard extends Component{
                 height={4}
                 width={4.5}
                 opacity={0.95}
-                position={[0, 0, -10]}>
+                position={this.props.cardPosition}>
                 <ViroImage
                     style={{ marginLeft: 0.5, marginTop:0.5 }}
                     opacity={1}
                     height={2}
                     width={3.5}
-                    source={require("./res/recipes.png")}
+                    source={require('./res/recipes.png')}
                 />
             </ViroFlexView>
 
-        {/* <ViroSound
-            source={require("./res/jazz.mp3")} /> */}
-        {/* <ViroSound paused={false}
+        {this.props.sound 
+        ? <ViroSound paused={false}
             muted={false}
-            source={require('./res/jazz.mp3')}
+            source={require('./res/Sounds/jazz.mp3')}
             loop={false}
             volume={1.0}
             onFinish={this.onFinishSound}
-            onError={this.onErrorSound} /> */}
-        {/* <ViroSpatialSound 
-            rolloffModel="linear"
-            paused={false}
-            muted={false}
-            minDistance={2}
-            maxDistance={5}
-            position={[0, 0, 5]}
-            source={require('./res/cube_sound.wav')}
-            loop={false}
-            volume={1.0}
-            onError={this.onError1} /> */}
+            onError={this.onErrorSound} />
+        : null}
+
         </ViroNode>
 )}}
 
