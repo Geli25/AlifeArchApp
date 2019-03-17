@@ -113,6 +113,7 @@ class ViroSample extends Component {
 
   resetScene = () => {
     this.props.resetChange(true);
+    this.props.clearDetection();
   }
 
   toggleModal=()=>{
@@ -131,7 +132,11 @@ class ViroSample extends Component {
 
         <View style={{ backgroundColor:'black', opacity:0.75, position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 550, height: 40, left:'14%', top: 37 }}>
           <Text style={localStyles.bodyText3}>
-            No iconography detected
+            {this.props.detected === "lion" 
+            ? "Lion: Guardian or Evangelist?" 
+            : this.props.detected === "ox"
+            ? "Ox: Sacrifice or Reprimand?"
+            : "No iconography detected"}
           </Text>
         </View>
 
@@ -187,7 +192,8 @@ class ViroSample extends Component {
             Please point your devices towards a specific part of the relief and stay still for 5-10 seconds.
           </Text>
           <Text style={localStyles.bodyText2}>
-           Only one iconography can be recognized at a time, tap the "Reset Session" button below to scan a new object.
+           Once you are finished with one iconography, move on to scan the next 
+           directly,tap the "Reset Session" button below to scan a new object.
           </Text>
           <Text style={localStyles.bodyText2}>
             Iconography locations:

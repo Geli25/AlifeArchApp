@@ -25,11 +25,6 @@ export default class AlifeTest extends Component {
   constructor(props) {
     super(props);
 
-    // Set initial state here
-    this.state={
-      text:"yo",
-    }
-
     // bind 'this' to functions
     ViroARTrackingTargets.createTargets({
       "lion": {
@@ -38,6 +33,18 @@ export default class AlifeTest extends Component {
       },
       "ox": {
         source: require('./res/Scans/ox.arobject'),
+        type: 'Object',
+      },
+      "serpent": {
+        source: require('./res/Scans/serpent.arobject'),
+        type: 'Object',
+      },
+      "monster": {
+        source: require('./res/Scans/monster.arobject'),
+        type: 'Object',
+      },
+      "horse": {
+        source: require('./res/Scans/horse.arobject'),
         type: 'Object',
       },
     });
@@ -54,24 +61,73 @@ export default class AlifeTest extends Component {
     return (
       <React.Fragment>
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
-          this.setState({
-            text: "Lion figure"
-          })
-        }
-        }>
-        </ViroARObjectMarker>
-        <AlifeCard
-            type="lion2"
+        {!this.props.detected||this.props.detected==="lion" 
+          ? 
+          <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
+            this.props.updateDetection("lion");
+          }}>
+            <ViroSound paused={false}
+              muted={false}
+              source={require('./res/Sounds/lion.mp3')}
+              loop={false}
+              volume={1.0}
+              onFinish={this.onFinishSound}
+              onError={this.onErrorSound} />
+          </ViroARObjectMarker>
+          : null}
+
+          {!this.props.detected || this.props.detected === "ox"
+            ?
+            <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
+              this.props.updateDetection("ox");
+            }}>
+            </ViroARObjectMarker>
+            : null}
+
+          {!this.props.detected || this.props.detected === "serpent"
+            ?
+            <ViroARObjectMarker target={"serpent"} onAnchorFound={() => {
+              this.props.updateDetection("serpent");
+            }}>
+            </ViroARObjectMarker>
+            : null}
+
+          {!this.props.detected || this.props.detected === "monster"
+            ?
+            <ViroARObjectMarker target={"monster"} onAnchorFound={() => {
+              this.props.updateDetection("monster");
+            }}>
+            </ViroARObjectMarker>
+            : null}
+
+          {!this.props.detected || this.props.detected === "horse"
+            ?
+            <ViroARObjectMarker target={"horse"} onAnchorFound={() => {
+              this.props.updateDetection("horse");
+            }}>
+            </ViroARObjectMarker>
+            : null}
+
+          <AlifeCard
+            type="lion1"
+            titlePosition={[0.2, 3.8, -10]}
             cardPosition={[0.2, 2, -10]} />
-        {/* <ViroImage /> */}
-        <ViroSound paused={false}
-          muted={false}
-          source={require('./res/Sounds/lion.mp3')}
-          loop={false}
-          volume={1.0}
-          onFinish={this.onFinishSound}
-          onError={this.onErrorSound} />
+          <ViroImage 
+            position={[-2.9, 2, -10]}
+            width={2}
+            height={2}
+            source={require('./res/imgReferences/lion1.jpg')} />
+
+          <AlifeCard
+            type="lion2"
+            titlePosition={[-4,-1.2,-10]}
+            cardPosition={[-4, -3, -10]} />
+          <ViroImage
+            position={[0.2, -3, -10]}
+            height={1.5}
+            width={4}
+            source={require('./res/imgReferences/lion2.jpg')} />
+
       </ViroARScene>
       </React.Fragment>
     );
@@ -120,7 +176,8 @@ var styles = StyleSheet.create({
 
 const mapStatetoProps = reduxState => {
   return {
-    resetState: reduxState.appManagement.resetState
+    resetState: reduxState.appManagement.resetState,
+    detected:reduxState.appManagement.detected
   }
 }
 
