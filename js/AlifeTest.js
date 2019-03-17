@@ -9,17 +9,16 @@ import {
   ViroConstants,
   ViroARTrackingTargets,
   ViroARObjectMarker,
-  ViroButton,
+  ViroImage,
   ViroARPlane,
-  ViroFlexView,
   ViroARCamera,
-  ViroText
+  ViroSound
 } from 'react-viro';
 
 import AlifeCard from './AlifeCard.js';
 
 import { connect } from 'react-redux';
-import { changeReset } from '../store/actions/appManagement';
+import { changeReset,updateDetection } from '../store/actions/appManagement';
 
 export default class AlifeTest extends Component {
 
@@ -55,34 +54,24 @@ export default class AlifeTest extends Component {
     return (
       <React.Fragment>
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        {this.props.reset ? ()=>this.props.arSceneNavigator.resetARSession(true, true) : null}
         <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
           this.setState({
             text: "Lion figure"
           })
         }
         }>
-            <AlifeCard
-              cardPosition={[0, 0, -10]} />
-          {/* <ViroBox position={[0, .25, 0]} scale={[.25, .25, .25]} /> */}
         </ViroARObjectMarker>
-        <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
-          this.setState({
-            text: "Ox figure"
-          })
-        }
-        }>
-            <AlifeCard
-              cardPosition={[0, 0, -10]} />
-            {/* <ViroSound paused={false}
-              muted={false}
-              source={require('./res/Sounds/jazz.mp3')}
-              loop={false}
-              volume={1.0}
-              onFinish={this.onFinishSound}
-              onError={this.onErrorSound} /> */}
-        </ViroARObjectMarker>
-
+        <AlifeCard
+            type="lion2"
+            cardPosition={[0.2, 2, -10]} />
+        {/* <ViroImage /> */}
+        <ViroSound paused={false}
+          muted={false}
+          source={require('./res/Sounds/lion.mp3')}
+          loop={false}
+          volume={1.0}
+          onFinish={this.onFinishSound}
+          onError={this.onErrorSound} />
       </ViroARScene>
       </React.Fragment>
     );
@@ -138,6 +127,7 @@ const mapStatetoProps = reduxState => {
 const mapDispatchtoProps = dispatch => {
   return {
     resetChange: (bool) => dispatch(changeReset(bool)),
+    updateDetection:(object)=>dispatch(updateDetection(object))
   }
 }
 

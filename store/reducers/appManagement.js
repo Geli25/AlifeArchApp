@@ -1,7 +1,8 @@
-import { CHANGE_RESET } from "../actions/actionTypes";
+import { CHANGE_RESET,CLEAR_DETECTION,UPDATE_DETECTION } from "../actions/actionTypes";
 
 const initialState = {
-    resetState:false
+    resetState:false,
+    detected:null
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,8 +12,18 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 resetState:action.resetState
             }
-        default:
-            return state;
+        case UPDATE_DETECTION:
+            return {
+                ...state,
+                detected:action.objectDetected
+            }
+        case CLEAR_DETECTION:
+            return {
+                ...state,
+                detected:null
+            }
+    default:
+        return state;
     }
 }
 

@@ -26,7 +26,7 @@ import {
 } from 'react-viro';
 
 import {connect} from 'react-redux';
-import {changeReset} from './store/actions/appManagement';
+import {changeReset,clearDetection} from './store/actions/appManagement';
 
 import renderIf from './js/renderIf';
 
@@ -61,10 +61,6 @@ class ViroSample extends Component {
     }
   }
 
-  componentDidUpdate(){
-    
-  }
-
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
   // if you are building a specific type of experience.
   render() {
@@ -82,14 +78,33 @@ class ViroSample extends Component {
         <View style={localStyles.inner} >
 
           <Text style={localStyles.titleText}>
-            Start AR app here:
+            Welcome to the Alife Bestiary
           </Text>
+
+          <Text style={localStyles.bodyText}>
+            The purpose of this project is to use the object recognition technology to
+            further explain the iconography of the archivolt of Alife. The archivolt of Alife
+            is a archivolt to the Alife cathedral, built during the Romanesque Period. Not much record
+            was left about it, leaving the exact meaning of the iconography on the archivolt open to
+            speculation. Through augmented reality and object recognition, the application provides
+            different explanations to ways that a specific animal on the archivolt can be interpreted. 
+          </Text>
+          <Text style={localStyles.bodyText}>
+            The research is always ongoing, and even these interpretations can change, this is
+            a reminder that not every information provided by museums is true. 
+          </Text>
+
+          <Text style={localStyles.bodyText}>
+            Iconography locations:
+          </Text>
+
+          <Image source={require('./js/res/scanningSpots.png')} />
 
           <TouchableHighlight style={localStyles.buttons}
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
             underlayColor={'#68a0ff'} >
 
-            <Text style={localStyles.buttonText}>AR</Text>
+            <Text style={localStyles.buttonText}>Begin</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -113,6 +128,12 @@ class ViroSample extends Component {
         <ViroARSceneNavigator {...this.state.sharedProps}
           style={localStyles.arView}
           initialScene={{ scene: InitialARScene, passProps:{reset:this.state.reset} }} />
+
+        <View style={{ backgroundColor:'black', opacity:0.75, position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 550, height: 40, left:'14%', top: 37 }}>
+          <Text style={localStyles.bodyText3}>
+            No iconography detected
+          </Text>
+        </View>
 
           
         {/* Info button on top right */}
@@ -148,19 +169,31 @@ class ViroSample extends Component {
         </View>
 
         {/* Info screen */}
-        {this.state.openModal ? <View style={{ 
+        {this.state.openModal 
+        ? <View style={{ 
             opacity: 0.9, 
             position: 'absolute', 
             backgroundColor: 'white', 
             flex: 1, 
-            flexDirection: 'row', 
+            flexDirection: 'column', 
             justifyContent: 'center', 
             alignItems: 'center', 
             width: '85%', 
             height: '75%', 
             top: '10%', 
             left: '7%' }}>
-          <Text>Hello</Text>
+          <Text style={localStyles.titleText2}>Instructions</Text>
+          <Text style={localStyles.bodyText2}>
+            Please point your devices towards a specific part of the relief and stay still for 5-10 seconds.
+          </Text>
+          <Text style={localStyles.bodyText2}>
+           Only one iconography can be recognized at a time, tap the "Reset Session" button below to scan a new object.
+          </Text>
+          <Text style={localStyles.bodyText2}>
+            Iconography locations:
+          </Text>
+
+          <Image source={require('./js/res/scanningSpots.png')} />
         </View> : null}
         
       </React.Fragment>
@@ -216,19 +249,43 @@ var localStyles = StyleSheet.create({
     paddingBottom: 20,
     color:'#fff',
     textAlign:'center',
-    fontSize : 25
+    fontSize : 30
+  },
+  titleText2: {
+    paddingTop: 30,
+    paddingBottom: 20,
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 30
+  },
+  bodyText: {
+    padding: 20,
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20
+  },
+  bodyText2: {
+    padding: 20,
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 20
+  },
+  bodyText3: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20
   },
   buttonText: {
     color:'#fff',
     textAlign:'center',
-    fontSize : 20
+    fontSize : 30
   },
   buttons : {
     height: 80,
     width: 250,
     paddingTop:20,
     paddingBottom:20,
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 10,
     backgroundColor:'#68a0cf',
     borderRadius: 10,
@@ -251,13 +308,15 @@ var localStyles = StyleSheet.create({
 
 const mapStatetoProps = reduxState => {
   return {
-    resetState: reduxState.appManagement.resetState
+    resetState: reduxState.appManagement.resetState,
+    detected:reduxState.appManagement.detected
   }
 }
 
 const mapDispatchtoProps = dispatch => {
   return {
     resetChange: (bool) => dispatch(changeReset(bool)),
+    clearDetection:()=>dispatch(clearDetection()),
   }
 }
 

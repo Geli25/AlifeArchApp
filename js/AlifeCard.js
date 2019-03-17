@@ -13,85 +13,68 @@ import {
     ViroSound
 } from 'react-viro';
 
-const firstImg = require('./res/dummy.png');
-const secondImg = require('./res/recipes.png');
-
 class AlifeCard extends Component{
 
     state={
         toggleText:false,
-        swipe:false,
-        typeArray:null
+        imgs:null
     }
 
     componentWillMount(){
-        // this.renderType(this.props.type);
-
-        ViroMaterials.createMaterials({
-            card: {
-                diffuseTexture: require('./res/media.png'),
-            },
+        this.setState({imgs:this.renderType(this.props.type)},()=>{
+            if (this.state.imgs.length===2){
+                ViroMaterials.createMaterials({
+                    card1: {
+                        diffuseTexture: this.state.imgs[0],
+                    },
+                    card2:{
+                        diffuseTexture: this.state.imgs[1]
+                    }
+                });
+            }
+            if (this.state.imgs.length===1){
+                ViroMaterials.createMaterials({
+                    card1: {
+                        diffuseTexture: this.state.imgs[0],
+                }})
+            }
         });
+
     }
 
-    onError1=()=>{
-        console.log("something went wrong");
-    }
-
-    //apparently swiping doesn't work very well
-    // swiping=(state)=>{
-    //     if (state===4&&!this.state.swipe){
-    //         this.setState({swipe:true})
-    //     }
-    //     if(state===3&&this.state.swipe){
-    //         this.setState({swipe:false})
-    //     }
-    // }
-
-    // renderType=(type)=>{
+    renderType=(type)=>{
         // should have lion1, lion2, ox1, ox2, serpent1, serpent2
-    //     if (type==="lion"){
-                //return an arrow of [backgroundimg,bodytext1,(bodytext2)]
-    //         return[]
-    //     }
-    // }
+        if (type==="lion1"){
+            return[require('./res/CardImages/lion1.png')]
+        }
+        if (type==="lion2"){
+            return[require('./res/CardImages/lion2.png'),require('./res/CardImages/lion2-1.png')]
+        }
+    }
 
     toggleText=()=>{
-        this.setState({swipe:!this.state.swipe})
+        this.setState({toggleText:!this.state.toggleText})
     }
 
     render(){
         return(
         <ViroNode>
-            <ViroFlexView
-                materials="card"
-                onClick={this.toggleText}
-                height={4}
-                width={4.5}
-                opacity={0.95}
-                position={this.props.cardPosition}>
-                <ViroImage
-                    style={{ marginLeft: 0.5, marginTop:0.5 }}
-                    opacity={1}
-                    height={2}
-                    width={3.5}
-                    source={this.state.swipe ? firstImg : secondImg}
-                />
-            </ViroFlexView>
+        {this.state.imgs.length === 1 
+        ? <ViroFlexView
+            materials="card1"
+            onClick={this.toggleText}
+            height={2.5}
+            width={4}
+            opacity={0.95}
+            position={this.props.cardPosition} /> 
+        : <ViroFlexView
+            materials={this.state.toggleText ? "card1" : "card2"}
+            onClick={this.toggleText}
+            height={2.5}
+            width={4}
+            opacity={0.95}
+            position={this.props.cardPosition} /> }
         </ViroNode>
 )}}
-
-// var styles = StyleSheet.create({
-//     helloWorldTextStyle: {
-//         fontFamily: 'Arial',
-//         fontSize:15,
-//         color: 'black',
-//         textAlignVertical: 'center',
-//     },
-//     background: {
-//         backgroundColor: '#ffffff'
-//     }
-// });
-
 
 export default AlifeCard;
