@@ -43,7 +43,7 @@ export default class AlifeTest extends Component {
         source: require('./res/Scans/monster.arobject'),
         type: 'Object',
       },
-      "horse": {
+      "horses": {
         source: require('./res/Scans/horse.arobject'),
         type: 'Object',
       },
@@ -66,6 +66,26 @@ export default class AlifeTest extends Component {
           <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
             this.props.updateDetection("lion");
           }}>
+              <AlifeCard
+                type="lion1"
+                titlePosition={[0.2, 3.8, -10]}
+                cardPosition={[0.2, 2, -10]} />
+              <ViroImage
+                onClick={() => this.props.updateDetection("serpent")}
+                position={[-2.9, 2, -10]}
+                width={2}
+                height={2}
+                source={require('./res/imgReferences/lion1.jpg')} />
+
+              <AlifeCard
+                type="lion2"
+                titlePosition={[-4, -1.2, -10]}
+                cardPosition={[-4, -3, -10]} />
+              <ViroImage
+                position={[0.2, -3, -10]}
+                height={1.5}
+                width={4}
+                source={require('./res/imgReferences/lion2.jpg')} />
             <ViroSound paused={false}
               muted={false}
               source={require('./res/Sounds/lion.mp3')}
@@ -100,33 +120,13 @@ export default class AlifeTest extends Component {
             </ViroARObjectMarker>
             : null}
 
-          {!this.props.detected || this.props.detected === "horse"
+          {!this.props.detected || this.props.detected === "horses"
             ?
-            <ViroARObjectMarker target={"horse"} onAnchorFound={() => {
-              this.props.updateDetection("horse");
+            <ViroARObjectMarker target={"horses"} onAnchorFound={() => {
+              this.props.updateDetection("horses");
             }}>
             </ViroARObjectMarker>
             : null}
-
-          <AlifeCard
-            type="lion1"
-            titlePosition={[0.2, 3.8, -10]}
-            cardPosition={[0.2, 2, -10]} />
-          <ViroImage 
-            position={[-2.9, 2, -10]}
-            width={2}
-            height={2}
-            source={require('./res/imgReferences/lion1.jpg')} />
-
-          <AlifeCard
-            type="lion2"
-            titlePosition={[-4,-1.2,-10]}
-            cardPosition={[-4, -3, -10]} />
-          <ViroImage
-            position={[0.2, -3, -10]}
-            height={1.5}
-            width={4}
-            source={require('./res/imgReferences/lion2.jpg')} />
 
       </ViroARScene>
       </React.Fragment>

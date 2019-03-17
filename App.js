@@ -134,8 +134,22 @@ class ViroSample extends Component {
           <Text style={localStyles.bodyText3}>
             {this.props.detected === "lion" 
             ? "Lion: Guardian or Evangelist?" 
+
             : this.props.detected === "ox"
             ? "Ox: Sacrifice or Reprimand?"
+
+            : this.props.detected === "serpent"
+            ? "Serpent: Punishment or Salvation?"
+
+            : this.props.detected === "monster"
+            ? "Tailed Monster: Devil or Beast?"
+
+            : this.props.detected === "birds"
+            ? "Birds: Doves or Ravens?" 
+
+            : this.props.detected === "horses"
+            ? "Ox: 3 Pegasus or the Four Horsemen?"
+
             : "No iconography detected"}
           </Text>
         </View>

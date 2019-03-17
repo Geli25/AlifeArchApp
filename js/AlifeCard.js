@@ -70,11 +70,11 @@ class AlifeCard extends Component{
         if (type==="lion2"){
             return [require('./res/CardImages/lion2.png'), require('./res/CardImages/lion2-1.png'), require('./res/Titles/lion2title.png')]
         }
-        if (type=="ox1"){
-            return [require('./res/CardImages/ox1.png')]
+        if (type==="ox1"){
+            return [require('./res/CardImages/ox1.png'), require('./res/Titles/oxtitle1.png')]
         }
         if (type === "ox2") {
-            return [require('./res/CardImages/ox2.png'), require('./res/CardImages/ox2-1.png')]
+            return [require('./res/CardImages/ox2.png'), require('./res/CardImages/ox2-1.png'), require('./res/Titles/oxtitle2.png')]
         }
     }
 
