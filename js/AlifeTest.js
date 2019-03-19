@@ -11,6 +11,7 @@ import {
   ViroARObjectMarker,
   ViroImage,
   ViroARPlane,
+  ViroARImageMarker,
   ViroARCamera,
   ViroSound
 } from 'react-viro';
@@ -18,7 +19,7 @@ import {
 import AlifeCard from './AlifeCard.js';
 
 import { connect } from 'react-redux';
-import { changeReset,updateDetection } from '../store/actions/appManagement';
+import { changeReset,updateDetection,setLoading } from '../store/actions/appManagement';
 
 export default class AlifeTest extends Component {
 
@@ -47,7 +48,18 @@ export default class AlifeTest extends Component {
         source: require('./res/Scans/horse.arobject'),
         type: 'Object',
       },
+      "birds":{
+        source: require('./res/Scans/birds.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
+      }
     });
+  }
+
+  componentDidMount(){
+    if (this.props.loading===true){
+      this.props.setLoading(false);
+    }
   }
 
   componentDidUpdate(){
@@ -68,10 +80,10 @@ export default class AlifeTest extends Component {
           }}>
               <AlifeCard
                 type="lion1"
+                cardRotation={[0, 0, 0]}
                 titlePosition={[0.2, 3.8, -10]}
                 cardPosition={[0.2, 2, -10]} />
               <ViroImage
-                onClick={() => this.props.updateDetection("serpent")}
                 position={[-2.9, 2, -10]}
                 width={2}
                 height={2}
@@ -79,6 +91,7 @@ export default class AlifeTest extends Component {
 
               <AlifeCard
                 type="lion2"
+                cardRotation={[0, 0, 0]}
                 titlePosition={[-4, -1.2, -10]}
                 cardPosition={[-4, -3, -10]} />
               <ViroImage
@@ -86,6 +99,7 @@ export default class AlifeTest extends Component {
                 height={1.5}
                 width={4}
                 source={require('./res/imgReferences/lion2.jpg')} />
+                
             <ViroSound paused={false}
               muted={false}
               source={require('./res/Sounds/lion.mp3')}
@@ -101,6 +115,25 @@ export default class AlifeTest extends Component {
             <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
               this.props.updateDetection("ox");
             }}>
+              <AlifeCard
+                type="ox1"
+                cardRotation={[0, 0, 0]}
+                titlePosition={[0.2, 3.8, -10]}
+                cardPosition={[0.2, 2, -10]} />
+
+              <AlifeCard
+                type="ox2"
+                cardRotation={[0, 0, 0]}
+                titlePosition={[-4, -1.2, -10]}
+                cardPosition={[-4, -3, -10]} />
+
+              <ViroSound paused={false}
+                muted={false}
+                source={require('./res/Sounds/ox.mp3')}
+                loop={false}
+                volume={1.0}
+                onFinish={this.onFinishSound}
+                onError={this.onErrorSound} />
             </ViroARObjectMarker>
             : null}
 
@@ -109,6 +142,26 @@ export default class AlifeTest extends Component {
             <ViroARObjectMarker target={"serpent"} onAnchorFound={() => {
               this.props.updateDetection("serpent");
             }}>
+              <AlifeCard
+                type="serpent1"
+                dynamic
+                cardRotation={[0, 0, 0]}
+                titlePosition={[0.2, 3.8, -10]}
+                cardPosition={[0.2, 2, -10]} />
+
+              <AlifeCard
+                type="serpent2"
+                cardRotation={[0, 0, 0]}
+                titlePosition={[-4, -1.2, -10]}
+                cardPosition={[-4, -3, -10]} />
+
+              <ViroSound paused={false}
+                muted={false}
+                source={require('./res/Sounds/serpent.mp3')}
+                loop={false}
+                volume={1.0}
+                onFinish={this.onFinishSound}
+                onError={this.onErrorSound} />
             </ViroARObjectMarker>
             : null}
 
@@ -117,6 +170,26 @@ export default class AlifeTest extends Component {
             <ViroARObjectMarker target={"monster"} onAnchorFound={() => {
               this.props.updateDetection("monster");
             }}>
+              <AlifeCard
+                type="monster1"
+                dynamic
+                cardRotation={[0, 0, 0]}
+                titlePosition={[0.2, 3.8, -10]}
+                cardPosition={[0.2, 2, -10]} />
+
+              <AlifeCard
+                type="monster2"
+                cardRotation={[0, 0, 0]}
+                titlePosition={[-4, -1.2, -10]}
+                cardPosition={[-4, -3, -10]} />
+
+              <ViroSound paused={false}
+                muted={false}
+                source={require('./res/Sounds/monster.mp3')}
+                loop={false}
+                volume={1.0}
+                onFinish={this.onFinishSound}
+                onError={this.onErrorSound} />
             </ViroARObjectMarker>
             : null}
 
@@ -125,8 +198,57 @@ export default class AlifeTest extends Component {
             <ViroARObjectMarker target={"horses"} onAnchorFound={() => {
               this.props.updateDetection("horses");
             }}>
+
+              <AlifeCard
+                type="horses1"
+                cardRotation={[0, 0, 0]}
+                titlePosition={[0.2, 3.8, -10]}
+                cardPosition={[0.2, 2, -10]} />
+
+              <AlifeCard
+                type="horses2"
+                dynamic
+                cardRotation={[0, 0, 0]}
+                titlePosition={[-4, -1.2, -10]}
+                cardPosition={[-4, -3, -10]} />
+
+              <ViroSound paused={false}
+                muted={false}
+                source={require('./res/Sounds/horses.mp3')}
+                loop={false}
+                volume={1.0}
+                onFinish={this.onFinishSound}
+                onError={this.onErrorSound} />
             </ViroARObjectMarker>
             : null}
+
+          {!this.props.detected || this.props.detected === "birds"
+          ?
+          <ViroARImageMarker target={"birds"} onAnchorFound={()=>{
+            this.props.updateDetection("birds");
+          }}>
+
+          <AlifeCard
+            type="birds1"
+            cardRotation={[-90,0,0]}
+            titlePosition={[3,-10,0]}
+            cardPosition={[3,-10, 1.8]} />
+
+          <AlifeCard
+            type="birds2"
+            cardRotation={[-90, 0, 0]}
+            titlePosition={[-5, -10, 0]}
+            cardPosition={[-5, -10, 1.8]} />
+
+          <ViroSound paused={false}
+            muted={false}
+            source={require('./res/Sounds/birds.mp3')}
+            loop={false}
+            volume={1.0}
+            onFinish={this.onFinishSound}
+            onError={this.onErrorSound} />
+            </ViroARImageMarker>
+          : null}
 
       </ViroARScene>
       </React.Fragment>
@@ -136,7 +258,7 @@ export default class AlifeTest extends Component {
   _onInitialized=(state, reason)=>{
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text: "This is a card"
+        text: "Tracking Normal"
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
@@ -177,14 +299,16 @@ var styles = StyleSheet.create({
 const mapStatetoProps = reduxState => {
   return {
     resetState: reduxState.appManagement.resetState,
-    detected:reduxState.appManagement.detected
+    detected:reduxState.appManagement.detected,
+    loading:reduxState.appManagement.loading
   }
 }
 
 const mapDispatchtoProps = dispatch => {
   return {
     resetChange: (bool) => dispatch(changeReset(bool)),
-    updateDetection:(object)=>dispatch(updateDetection(object))
+    updateDetection:(object)=>dispatch(updateDetection(object)),
+    setLoading:(bool)=>dispatch(setLoading(bool))
   }
 }
 

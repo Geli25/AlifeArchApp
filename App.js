@@ -26,7 +26,7 @@ import {
 } from 'react-viro';
 
 import {connect} from 'react-redux';
-import {changeReset,clearDetection} from './store/actions/appManagement';
+import {changeReset,clearDetection,setLoading} from './store/actions/appManagement';
 
 import renderIf from './js/renderIf';
 
@@ -34,7 +34,7 @@ import renderIf from './js/renderIf';
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: "api-key",
+  apiKey: "2274C08B-12E4-4157-9DD5-DBD5A6C9D638",
 }
 
 // Sets the default scene you want for AR and VR
@@ -77,9 +77,15 @@ class ViroSample extends Component {
       <View style={localStyles.outer} >
         <View style={localStyles.inner} >
 
-          <Text style={localStyles.titleText}>
+          {this.props.loadingState 
+            ? <Text style={localStyles.titleText}>
+            Loading... 
+            </Text>
+            : 
+            <React.Fragment>
+            <Text style={localStyles.titleText}>
             Welcome to the Alife Bestiary
-          </Text>
+            </Text>
 
           <Text style={localStyles.bodyText}>
             The purpose of this project is to use the object recognition technology to
@@ -104,8 +110,9 @@ class ViroSample extends Component {
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
             underlayColor={'#68a0ff'} >
 
-            <Text style={localStyles.buttonText}>Begin</Text>
+          <Text style={localStyles.buttonText}>Begin</Text>
           </TouchableHighlight>
+          </React.Fragment>}
         </View>
       </View>
     );
@@ -148,7 +155,7 @@ class ViroSample extends Component {
             ? "Birds: Doves or Ravens?" 
 
             : this.props.detected === "horses"
-            ? "Ox: 3 Pegasus or the Four Horsemen?"
+            ? "Horses: 3 Pegasus or the Four Horsemen?"
 
             : "No iconography detected"}
           </Text>
@@ -225,14 +232,18 @@ class ViroSample extends Component {
   // by the experience selector buttons
   _getExperienceButtonOnPress=(navigatorType)=>{
     return () => {
+      this.props.setLoading(true);
       if (this.state.startClicked === false) {
         this.setState({
           startClicked: true
+        },()=>{
+          setTimeout(()=>{
+            this.setState({
+              navigatorType: navigatorType
+            })
+          },500)
         });
       }
-      this.setState({
-        navigatorType : navigatorType
-      })
     }
   }
 
@@ -329,7 +340,8 @@ var localStyles = StyleSheet.create({
 const mapStatetoProps = reduxState => {
   return {
     resetState: reduxState.appManagement.resetState,
-    detected:reduxState.appManagement.detected
+    detected:reduxState.appManagement.detected,
+    loadingState:reduxState.appManagement.loading
   }
 }
 
@@ -337,6 +349,7 @@ const mapDispatchtoProps = dispatch => {
   return {
     resetChange: (bool) => dispatch(changeReset(bool)),
     clearDetection:()=>dispatch(clearDetection()),
+    setLoading:(bool)=>dispatch(setLoading(bool))
   }
 }
 

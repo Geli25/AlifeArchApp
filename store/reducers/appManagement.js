@@ -1,12 +1,18 @@
-import { CHANGE_RESET,CLEAR_DETECTION,UPDATE_DETECTION } from "../actions/actionTypes";
+import { CHANGE_RESET,CLEAR_DETECTION,UPDATE_DETECTION,SET_LOADING } from "../actions/actionTypes";
 
 const initialState = {
     resetState:false,
-    detected:null
+    detected:null,
+    loading:false
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_LOADING:
+            return {
+                ...state,
+                loading:action.loading
+            }
         case CHANGE_RESET:
             return {
                 ...state,

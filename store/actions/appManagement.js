@@ -1,4 +1,11 @@
-import { CHANGE_RESET,UPDATE_DETECTION,CLEAR_DETECTION } from './actionTypes';
+import { CHANGE_RESET,UPDATE_DETECTION,CLEAR_DETECTION,SET_LOADING } from './actionTypes';
+
+export const setLoading=(bool)=>{
+    return{
+        type:SET_LOADING,
+        loading:bool
+    }
+}
 
 export const changeReset = (bool) => {
     return {
