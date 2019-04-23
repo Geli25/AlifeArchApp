@@ -85,6 +85,7 @@ export default class AlifeTest_app extends Component {
                 cardRotation={[0, 0, 0]}
                 titlePosition={[0.2, 3.8, -10]}
                 cardPosition={[0.2, 2, -10]} />
+
               <ViroImage
                 position={[-2.9, 2, -10]}
                 width={2}
@@ -127,11 +128,23 @@ export default class AlifeTest_app extends Component {
                     titlePosition={[0.2, 3.8, -10]}
                     cardPosition={[0.2, 2, -10]} />
 
+                  <ViroImage
+                    position={[-2.9, 2, -10]}
+                    width={2.5}
+                    height={2}
+                    source={require('./res/imgReferences/ox1.jpg')} />
+
                   <AlifeCard
                     type="ox2"
                     cardRotation={[0, 0, 0]}
                     titlePosition={[-4, -1.2, -10]}
                     cardPosition={[-4, -3, -10]} />
+
+                  <ViroImage
+                    position={[0.2, -3, -10]}
+                    height={2.5}
+                    width={4}
+                    source={require('./res/imgReferences/ox2.JPG')} />
 
                   <ViroSound paused={false}
                     muted={false}
@@ -159,11 +172,23 @@ export default class AlifeTest_app extends Component {
                     titlePosition={[0.2, 3.8, -10]}
                     cardPosition={[0.2, 2, -10]} />
 
+                  <ViroImage
+                    position={[-2.9, 2, -10]}
+                    width={3.5}
+                    height={2}
+                    source={require('./res/imgReferences/serpent1.jpg')} />
+
                   <AlifeCard
                     type="serpent2"
                     cardRotation={[0, 0, 0]}
                     titlePosition={[-4, -1.2, -10]}
                     cardPosition={[-4, -3, -10]} />
+
+                  <ViroImage
+                    position={[0.2, -3, -10]}
+                    height={2}
+                    width={4}
+                    source={require('./res/imgReferences/serpent2.jpg')} />
 
                   <ViroSound paused={false}
                     muted={false}
@@ -191,11 +216,23 @@ export default class AlifeTest_app extends Component {
                     titlePosition={[0.2, 3.8, -10]}
                     cardPosition={[0.2, 2, -10]} />
 
+                  <ViroImage
+                    position={[-2.9, 2, -10]}
+                    width={2}
+                    height={2}
+                    source={require('./res/imgReferences/monster1.JPG')} />
+
                   <AlifeCard
                     type="monster2"
                     cardRotation={[0, 0, 0]}
                     titlePosition={[-4, -1.2, -10]}
                     cardPosition={[-4, -3, -10]} />
+
+                  <ViroImage
+                    position={[0.2, -3, -10]}
+                    height={1.5}
+                    width={4}
+                    source={require('./res/imgReferences/monster2.jpg')} />
 
                   <ViroSound paused={false}
                     muted={false}
@@ -223,12 +260,24 @@ export default class AlifeTest_app extends Component {
                     titlePosition={[0.2, 3.8, -10]}
                     cardPosition={[0.2, 2, -10]} />
 
+                  <ViroImage
+                    position={[-2.9, 2, -10]}
+                    width={2.5}
+                    height={2.5}
+                    source={require('./res/imgReferences/horses1.JPG')} />
+
                   <AlifeCard
                     type="horses2"
                     dynamic
                     cardRotation={[0, 0, 0]}
                     titlePosition={[-4, -1.2, -10]}
                     cardPosition={[-4, -3, -10]} />
+
+                  <ViroImage
+                    position={[0.2, -3, -10]}
+                    height={2}
+                    width={4.5}
+                    source={require('./res/imgReferences/horses2.JPG')} />
 
                   <ViroSound paused={false}
                     muted={false}
@@ -256,11 +305,23 @@ export default class AlifeTest_app extends Component {
                     titlePosition={[3, -10, 0]}
                     cardPosition={[3, -10, 1.8]} />
 
+                  <ViroImage
+                    position={[-2.9, 2, -10]}
+                    width={2.5}
+                    height={2.5}
+                    source={require('./res/imgReferences/birds1.JPG')} />
+
                   <AlifeCard
                     type="birds2"
                     cardRotation={[-90, 0, 0]}
                     titlePosition={[-5, -10, 0]}
                     cardPosition={[-5, -10, 1.8]} />
+
+                  <ViroImage
+                    position={[0.2, -3, -10]}
+                    height={2}
+                    width={4.5}
+                    source={require('./res/imgReferences/birds2.JPG')} />
 
                   <ViroSound paused={false}
                     muted={false}
