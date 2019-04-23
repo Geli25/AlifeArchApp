@@ -34,7 +34,7 @@ import renderIf from './js/renderIf';
  TODO: Insert your API key below
  */
 var sharedProps = {
-  apiKey: "api-key",
+  apiKey: "2274C08B-12E4-4157-9DD5-DBD5A6C9D638",
 }
 
 // Sets the default scene you want for AR and VR
@@ -52,13 +52,19 @@ class ViroSample extends Component {
     navigatorType: defaultNavigatorType,
     openModal:false,
     sharedProps: sharedProps,
-    startClicked:false
+    startClicked:false,
+    orientation:null
   }
 
   componentWillMount(){
     if (this.state.startClicked===false){
       this.setState({openModal:true})
     }
+    Dimensions.addEventListener("change", ()=>{
+      this.setState({
+        orientation:Dimensions.get('window').height>Dimensions.get('window').width ? "portrait" : "landscape"
+      })
+    })
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -137,7 +143,7 @@ class ViroSample extends Component {
           style={localStyles.arView}
           initialScene={{ scene: InitialARScene, passProps:{reset:this.state.reset} }} />
 
-        <View style={{ backgroundColor:'black', opacity:0.75, position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 550, height: 40, left:'14%', top: 37 }}>
+        <View style={{ backgroundColor:'black', opacity:0.75, position: 'absolute', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 550, height: 40, left:this.state.orientation==="landscape"? '25%' :'14%', top: 37 }}>
           <Text style={localStyles.bodyText3}>
             {this.props.detected === "lion" 
             ? "Lion: Guardian or Evangelist?" 
@@ -221,6 +227,14 @@ class ViroSample extends Component {
           </Text>
 
           <Image source={require('./js/res/scanningSpots.png')} />
+            <TouchableHighlight
+              style={localStyles.okbutton}
+              onPress={this.toggleModal}
+              underlayColor={'#68a0ff'} >
+
+              <Text style={localStyles.okbuttonText}>Got it</Text>
+            </TouchableHighlight>
+
         </View> : null}
         
       </React.Fragment>
@@ -311,6 +325,11 @@ var localStyles = StyleSheet.create({
     textAlign:'center',
     fontSize : 30
   },
+  okbuttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 28
+  },
   buttons : {
     height: 80,
     width: 250,
@@ -319,6 +338,18 @@ var localStyles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 10,
     backgroundColor:'#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  okbutton: {
+    height: 50,
+    width: 200,
+    paddingTop: 7,
+    paddingBottom: 5,
+    marginTop: 30,
+    marginBottom: 10,
+    backgroundColor: 'green',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff',

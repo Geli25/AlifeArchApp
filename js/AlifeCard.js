@@ -43,7 +43,7 @@ class AlifeCard extends Component{
                     card2d: {
                         diffuseTexture: this.state.imgs[1]
                     },
-                    title1: {
+                    title1d: {
                         diffuseTexture: this.state.imgs[2]
                     }
                 });
@@ -53,7 +53,7 @@ class AlifeCard extends Component{
                     card: {
                         diffuseTexture: this.state.imgs[0],
                     },
-                    title1: {
+                    title1b: {
                         diffuseTexture: this.state.imgs[1]
                     }  
             })
@@ -63,7 +63,7 @@ class AlifeCard extends Component{
                     cardd: {
                         diffuseTexture: this.state.imgs[0],
                     },
-                    title2: {
+                    title2b: {
                         diffuseTexture: this.state.imgs[1]
                     }
                 })
@@ -129,7 +129,7 @@ class AlifeCard extends Component{
         <ViroFlexView
             width={4}
             height={0.5}
-            materials='title1'
+            materials='title1b'
             rotation={this.props.cardRotation}
             position={this.props.titlePosition} />
         <ViroFlexView
@@ -145,7 +145,7 @@ class AlifeCard extends Component{
             <ViroFlexView
                 width={4}
                 height={0.5}
-                materials='title1'
+                materials='title1d'
                 rotation={this.props.cardRotation}
                 position={this.props.titlePosition} />
             <ViroFlexView
@@ -162,7 +162,7 @@ class AlifeCard extends Component{
             <ViroFlexView
                 width={4}
                 height={0.5}
-                materials='title2'
+                materials='title2b'
                 rotation={this.props.cardRotation}
                 position={this.props.titlePosition} />
             <ViroFlexView

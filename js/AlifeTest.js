@@ -29,24 +29,29 @@ export default class AlifeTest extends Component {
     // bind 'this' to functions
     ViroARTrackingTargets.createTargets({
       "lion": {
-        source: require('./res/Scans/lion.arobject'),
-        type: 'Object',
+        source: require('./res/Scans/lion.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
       },
       "ox": {
-        source: require('./res/Scans/ox.arobject'),
-        type: 'Object',
+        source: require('./res/Scans/ox.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
       },
       "serpent": {
-        source: require('./res/Scans/serpent.arobject'),
-        type: 'Object',
+        source: require('./res/Scans/serpent.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
       },
       "monster": {
-        source: require('./res/Scans/monster.arobject'),
-        type: 'Object',
+        source: require('./res/Scans/monster.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
       },
       "horses": {
-        source: require('./res/Scans/horse.arobject'),
-        type: 'Object',
+        source: require('./res/Scans/horses.JPG'),
+        orientation: "Up",
+        physicalWidth: 0.1
       },
       "birds":{
         source: require('./res/Scans/birds.JPG'),
@@ -75,27 +80,33 @@ export default class AlifeTest extends Component {
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         {!this.props.detected||this.props.detected==="lion" 
           ? 
-          <ViroARObjectMarker target={"lion"} onAnchorFound={() => {
+          <ViroARImageMarker target={"lion"} onAnchorFound={() => {
             this.props.updateDetection("lion");
           }}>
+            {this.props.detected==="lion" ? 
+            <React.Fragment>
               <AlifeCard
                 type="lion1"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[0.2, 3.8, -10]}
-                cardPosition={[0.2, 2, -10]} />
+                cardRotation={[-90, 0, 0]}
+                titlePosition={[3, -10, 0]}
+                cardPosition={[3, -10, 1.8]} />
+
               <ViroImage
-                position={[-2.9, 2, -10]}
+                position={[3, -10, 4.5]}
+                rotation={[-90,0,0]}
                 width={2}
                 height={2}
                 source={require('./res/imgReferences/lion1.jpg')} />
 
               <AlifeCard
                 type="lion2"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[-4, -1.2, -10]}
-                cardPosition={[-4, -3, -10]} />
+                cardRotation={[-90, 0, 0]}
+                titlePosition={[-5, -10, 0]}
+                cardPosition={[-5, -10, 1.8]} />
+
               <ViroImage
-                position={[0.2, -3, -10]}
+                position={[-5, -10, 4]}
+                rotation={[-90, 0, 0]}
                 height={1.5}
                 width={4}
                 source={require('./res/imgReferences/lion2.jpg')} />
@@ -107,119 +118,197 @@ export default class AlifeTest extends Component {
               volume={1.0}
               onFinish={this.onFinishSound}
               onError={this.onErrorSound} />
-          </ViroARObjectMarker>
+              </React.Fragment>
+          : null}
+          </ViroARImageMarker>
           : null}
 
           {!this.props.detected || this.props.detected === "ox"
             ?
-            <ViroARObjectMarker target={"ox"} onAnchorFound={() => {
+            <ViroARImageMarker target={"ox"} onAnchorFound={() => {
               this.props.updateDetection("ox");
             }}>
-              <AlifeCard
-                type="ox1"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[0.2, 3.8, -10]}
-                cardPosition={[0.2, 2, -10]} />
+              {this.props.detected === "ox" ?
+                <React.Fragment>
+                  <AlifeCard
+                    type="ox1"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[3, -10, 0]}
+                    cardPosition={[3, -10, 1.8]} />
 
-              <AlifeCard
-                type="ox2"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[-4, -1.2, -10]}
-                cardPosition={[-4, -3, -10]} />
 
-              <ViroSound paused={false}
-                muted={false}
-                source={require('./res/Sounds/ox.mp3')}
-                loop={false}
-                volume={1.0}
-                onFinish={this.onFinishSound}
-                onError={this.onErrorSound} />
-            </ViroARObjectMarker>
+                  <ViroImage
+                    position={[3, -10, 4.1]}
+                    rotation={[-90, 0, 0]}
+                    width={2.5}
+                    height={2}
+                    source={require('./res/imgReferences/ox1.jpg')} />
+
+                  <AlifeCard
+                    type="ox2"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[-5, -10, 0]}
+                    cardPosition={[-5, -10, 1.8]} />
+
+
+                  <ViroImage
+                    position={[-5, -10, 4.5]}
+                    rotation={[-90, 0, 0]}
+                    height={2.5}
+                    width={4}
+                    source={require('./res/imgReferences/ox2.JPG')} />
+
+                  <ViroSound paused={false}
+                    muted={false}
+                    source={require('./res/Sounds/ox.mp3')}
+                    loop={false}
+                    volume={1.0}
+                    onFinish={this.onFinishSound}
+                    onError={this.onErrorSound} />
+                </React.Fragment>
+                : null}
+            </ViroARImageMarker>
             : null}
 
           {!this.props.detected || this.props.detected === "serpent"
             ?
-            <ViroARObjectMarker target={"serpent"} onAnchorFound={() => {
+            <ViroARImageMarker target={"serpent"} onAnchorFound={() => {
               this.props.updateDetection("serpent");
             }}>
+              {this.props.detected === "serpent" ? 
+              <React.Fragment>
               <AlifeCard
                 type="serpent1"
                 dynamic
-                cardRotation={[0, 0, 0]}
-                titlePosition={[0.2, 3.8, -10]}
-                cardPosition={[0.2, 2, -10]} />
+                cardRotation={[-90, 0, 0]}
+                titlePosition={[3, -10, 0]}
+                cardPosition={[3, -10, 1.8]} />
 
-              <AlifeCard
-                type="serpent2"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[-4, -1.2, -10]}
-                cardPosition={[-4, -3, -10]} />
+                  <ViroImage
+                    position={[3, -10, 4.5]}
+                    rotation={[-90, 0, 0]}
+                    width={3.5}
+                    height={2}
+                    source={require('./res/imgReferences/serpent1.jpg')} />
 
-              <ViroSound paused={false}
-                muted={false}
-                source={require('./res/Sounds/serpent.mp3')}
-                loop={false}
-                volume={1.0}
-                onFinish={this.onFinishSound}
-                onError={this.onErrorSound} />
-            </ViroARObjectMarker>
+                <AlifeCard
+                  type="serpent2"
+                  cardRotation={[-90, 0, 0]}
+                  titlePosition={[-5, -10, 0]}
+                  cardPosition={[-5, -10, 1.8]} />
+
+
+                  <ViroImage
+                    position={[-5, -10, 4.2]}
+                    rotation={[-90, 0, 0]}
+                    height={2}
+                    width={4}
+                    source={require('./res/imgReferences/serpent2.jpg')} />
+
+                <ViroSound paused={false}
+                  muted={false}
+                  source={require('./res/Sounds/serpent.mp3')}
+                  loop={false}
+                  volume={1.0}
+                  onFinish={this.onFinishSound}
+                  onError={this.onErrorSound} /> 
+                </React.Fragment>
+                : null}
+            </ViroARImageMarker>
             : null}
 
           {!this.props.detected || this.props.detected === "monster"
             ?
-            <ViroARObjectMarker target={"monster"} onAnchorFound={() => {
+            <ViroARImageMarker target={"monster"} onAnchorFound={() => {
               this.props.updateDetection("monster");
             }}>
-              <AlifeCard
-                type="monster1"
-                dynamic
-                cardRotation={[0, 0, 0]}
-                titlePosition={[0.2, 3.8, -10]}
-                cardPosition={[0.2, 2, -10]} />
+              {this.props.detected === "monster" ?
+                <React.Fragment>
+                  <AlifeCard
+                    type="monster1"
+                    dynamic
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[3, -10, 0]}
+                    cardPosition={[3, -10, 1.8]} />
 
-              <AlifeCard
-                type="monster2"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[-4, -1.2, -10]}
-                cardPosition={[-4, -3, -10]} />
+                  <ViroImage
+                    position={[3, -10, 3.8]}
+                    rotation={[-90, 0, 0]}
+                    width={2}
+                    height={2}
+                    source={require('./res/imgReferences/monster1.JPG')} />
 
-              <ViroSound paused={false}
-                muted={false}
-                source={require('./res/Sounds/monster.mp3')}
-                loop={false}
-                volume={1.0}
-                onFinish={this.onFinishSound}
-                onError={this.onErrorSound} />
-            </ViroARObjectMarker>
+                  <AlifeCard
+                    type="monster2"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[-5, -10, 0]}
+                    cardPosition={[-5, -10, 1.8]} />
+
+
+                  <ViroImage
+                    position={[-5, -10, 4]}
+                    rotation={[-90, 0, 0]}
+                    height={1.5}
+                    width={4}
+                    source={require('./res/imgReferences/monster2.jpg')} />
+
+                  <ViroSound paused={false}
+                    muted={false}
+                    source={require('./res/Sounds/monster.mp3')}
+                    loop={false}
+                    volume={1.0}
+                    onFinish={this.onFinishSound}
+                    onError={this.onErrorSound} />
+                </React.Fragment>
+                : null}
+            </ViroARImageMarker>
             : null}
 
           {!this.props.detected || this.props.detected === "horses"
             ?
-            <ViroARObjectMarker target={"horses"} onAnchorFound={() => {
+            <ViroARImageMarker target={"horses"} onAnchorFound={() => {
               this.props.updateDetection("horses");
             }}>
+              {this.props.detected === "horses" ?
+                <React.Fragment>
+                  <AlifeCard
+                    type="horses1"
+                    dynamic
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[3, -10, 0]}
+                    cardPosition={[3, -10, 1.8]} />
 
-              <AlifeCard
-                type="horses1"
-                cardRotation={[0, 0, 0]}
-                titlePosition={[0.2, 3.8, -10]}
-                cardPosition={[0.2, 2, -10]} />
 
-              <AlifeCard
-                type="horses2"
-                dynamic
-                cardRotation={[0, 0, 0]}
-                titlePosition={[-4, -1.2, -10]}
-                cardPosition={[-4, -3, -10]} />
+                  <ViroImage
+                    position={[3, -10, 4.4]}
+                    rotation={[-90, 0, 0]}
+                    width={2.5}
+                    height={2.5}
+                    source={require('./res/imgReferences/horses1.JPG')} />
 
-              <ViroSound paused={false}
-                muted={false}
-                source={require('./res/Sounds/horses.mp3')}
-                loop={false}
-                volume={1.0}
-                onFinish={this.onFinishSound}
-                onError={this.onErrorSound} />
-            </ViroARObjectMarker>
+                  <AlifeCard
+                    type="horses2"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[-5, -10, 0]}
+                    cardPosition={[-5, -10, 1.8]} />
+
+                  <ViroImage
+                    position={[-5, -10, 4.3]}
+                    rotation={[-90, 0, 0]}
+                    height={2}
+                    width={4.5}
+                    source={require('./res/imgReferences/horses2.JPG')} />
+
+                  <ViroSound paused={false}
+                    muted={false}
+                    source={require('./res/Sounds/horses.mp3')}
+                    loop={false}
+                    volume={1.0}
+                    onFinish={this.onFinishSound}
+                    onError={this.onErrorSound} />
+                </React.Fragment>
+                : null}
+            </ViroARImageMarker>
             : null}
 
           {!this.props.detected || this.props.detected === "birds"
@@ -228,25 +317,44 @@ export default class AlifeTest extends Component {
             this.props.updateDetection("birds");
           }}>
 
-          <AlifeCard
-            type="birds1"
-            cardRotation={[-90,0,0]}
-            titlePosition={[3,-10,0]}
-            cardPosition={[3,-10, 1.8]} />
+              {this.props.detected === "birds" ?
+                <React.Fragment>
+                  <AlifeCard
+                    type="birds1"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[3, -10, 0]}
+                    cardPosition={[3, -10, 1.8]} />
 
-          <AlifeCard
-            type="birds2"
-            cardRotation={[-90, 0, 0]}
-            titlePosition={[-5, -10, 0]}
-            cardPosition={[-5, -10, 1.8]} />
+                  <ViroImage
+                    position={[3, -10, 4.4]}
+                    rotation={[-90, 0, 0]}
+                    width={2.5}
+                    height={2.5}
+                    source={require('./res/imgReferences/birds1.JPG')} />
 
-          <ViroSound paused={false}
-            muted={false}
-            source={require('./res/Sounds/birds.mp3')}
-            loop={false}
-            volume={1.0}
-            onFinish={this.onFinishSound}
-            onError={this.onErrorSound} />
+                  <AlifeCard
+                    type="birds2"
+                    cardRotation={[-90, 0, 0]}
+                    titlePosition={[-5, -10, 0]}
+                    cardPosition={[-5, -10, 1.8]} />
+
+
+                  <ViroImage
+                    position={[-5, -10, 4.3]}
+                    rotation={[-90, 0, 0]}
+                    height={2}
+                    width={4.5}
+                    source={require('./res/imgReferences/birds2.JPG')} />
+
+                  <ViroSound paused={false}
+                    muted={false}
+                    source={require('./res/Sounds/birds.mp3')}
+                    loop={false}
+                    volume={1.0}
+                    onFinish={this.onFinishSound}
+                    onError={this.onErrorSound} />
+                </React.Fragment>
+                : null}
             </ViroARImageMarker>
           : null}
 
